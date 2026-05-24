@@ -13,11 +13,12 @@ Notionに自動で保存・分類・下書き生成してくれるシステム�
 hatarakumama-workflow/
 ├── CLAUDE.md               # Claudeへの指示書（編集不要）
 ├── README.md               # このマニュアル
-├── prompts/
-│   ├── seminar.md          # セミナー処理（文字起こし→note下書き）
-│   ├── session.md          # セッション処理（文字起こし→言葉DB保存）
-│   └── generate-draft.md   # 蓄積データ→note下書き生成
-└── input/                  # 文字起こしファイルを置くフォルダ
+├── input/                  # 文字起こしファイルを置くフォルダ
+└── .claude/
+    └── skills/
+        ├── process-seminar/   # セミナー処理スキル
+        ├── process-session/   # セッション処理スキル
+        └── generate-draft/    # 下書き生成スキル
 ```
 
 ---
@@ -28,15 +29,14 @@ hatarakumama-workflow/
 
 1. Nottaでセミナー音声を文字起こしして、.txt形式でエクスポートする
 2. エクスポートしたファイルを `input/` フォルダに入れる
-3. VS Code でこのフォルダを開き、Claude Code を起動する
-4. 以下を入力して実行する:
+3. Claude Code を起動して以下を入力する:
 
 ```
-prompts/seminar.md を読んで実行してください
+/process-seminar
 ```
 
-5. Notionの「コンテンツ下書きDB」に下書きが保存されたら完了
-6. 確認して問題なければnoteにコピー&ペーストして投稿する
+4. Notionの「コンテンツ下書きDB」に下書きが保存されたら完了
+5. 確認して問題なければnoteにコピー&ペーストして投稿する
 
 ---
 
@@ -44,25 +44,23 @@ prompts/seminar.md を読んで実行してください
 
 1. Nottaでセッション音声を文字起こしして、.txt形式でエクスポートする
 2. エクスポートしたファイルを `input/` フォルダに入れる
-3. Claude Code を起動して以下を入力:
+3. Claude Code を起動して以下を入力する:
 
 ```
-prompts/session.md を読んで実行してください
+/process-session
 ```
 
 4. Notionの「クライアント言葉DB」にクライアントの言葉が保存されたら完了
-5. 必要に応じてNotionでタグを確認・修正する
 
 ---
 
 ### パターンC: 蓄積した言葉からnote下書きを作る
 
-1. Notionの「クライアント言葉DB」で、使いたい言葉に使い道タグ「note下書き」が付いていることを確認する
-2. Claude Code を起動して以下を入力:
+1. Notionの「クライアント言葉DB」で使いたい言葉にタグが付いていることを確認する
+2. Claude Code を起動して以下を入力する:
 
 ```
-prompts/generate-draft.md を読んで実行してください。
-分野: 子育てメンタル、テーマ: 自己否定 で絞り込んでください。
+/generate-draft 子育てメンタル 自己否定
 ```
 
 （分野・テーマは都度変えてください）
